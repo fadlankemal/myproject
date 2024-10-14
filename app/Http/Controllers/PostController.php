@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')->select('nama_barang', 'tipe_barang', 'merek_barang', 'rak_barang', 'nomor_rak')->get();
+        $posts = Post::kolom()->get();
         $view_data = [
             'posts' => $posts,
         ];
@@ -24,11 +25,9 @@ class PostController extends Controller
 
     public function databarang()
     {
-        $posts = DB::table('posts')->select('id', 'nama_barang', 'tipe_barang', 'merek_barang', 'rak_barang', 'nomor_rak')
-        ->where('kolom', true)
-        ->get();
+        $posts = Post::kolom()->get();
         $view_data = [
-            'posts' => $posts
+            'posts' => $posts,
         ];
         return view('posts.databarang', $view_data);
     }
