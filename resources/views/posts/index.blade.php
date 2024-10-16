@@ -21,7 +21,7 @@
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{ url('posts/databarang')}}">Data Barang</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Barang Masuk</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{ url('posts/show{id}')}}">Barang Masuk</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Barang Keluar</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Data Stok</a>
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Laporan Masuk</a>
@@ -82,6 +82,8 @@
                 </table>
 
             </div>
+
+            
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

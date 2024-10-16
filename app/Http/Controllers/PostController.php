@@ -16,6 +16,10 @@ class PostController extends Controller
      */
     public function index()
     {
+        if (!Auth::check()) {
+            return redirect('login');
+        }
+        
         $posts = Post::kolom()->get();
         $view_data = [
             'posts' => $posts,
@@ -49,7 +53,7 @@ class PostController extends Controller
         $rak_barang = $request->input('rak_barang');
         $nomor_rak = $request->input('nomor_rak');
 
-        DB::table('posts')->insert([
+        Post::insert([
             'nama_barang' => $nama_barang,
             'tipe_barang' => $tipe_barang,
             'merek_barang' => $merek_barang,
@@ -65,16 +69,25 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
+    public function show(string $id)
+    {
+        $post = Post::where('id', $id)
+            ->first();
+        $comments = $post->comments()->limit(2)->get();
+
+        $view_data = [
+            'post' => $post,
+            'comments' => $comments,
+        ];
+        return view('posts.show', $view_data);
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $post = DB::table('posts')
-            ->select('id', 'nama_barang', 'tipe_barang', 'merek_barang', 'rak_barang', 'nomor_rak')
-            ->where('id', '=', $id)
+        $post = Post::where('id', $id)
             ->first();
 
         $view_data = [
@@ -94,16 +107,15 @@ class PostController extends Controller
         $rak_barang = $request->input('rak_barang');
         $nomor_rak = $request->input('nomor_rak');
 
-        DB::table('posts')
-        ->where('id', $id)
-        ->update([
-            'nama_barang' => $nama_barang,
-            'tipe_barang' => $tipe_barang,
-            'merek_barang' => $merek_barang,
-            'rak_barang' => $rak_barang,
-            'nomor_rak' => $nomor_rak,
+        Post::where('id', $id)
+            ->update([
+                'nama_barang' => $nama_barang,
+                'tipe_barang' => $tipe_barang,
+                'merek_barang' => $merek_barang,
+                'rak_barang' => $rak_barang,
+                'nomor_rak' => $nomor_rak,
 
-        ]);
+            ]);
 
         return redirect('posts/databarang');
     }
@@ -113,6 +125,8 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Post::where('id', $id)->delete();
+
+        return redirect('posts/databarang');
     }
 }

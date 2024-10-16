@@ -38,7 +38,11 @@
             </div>
             <button type="submit" class="btn btn-success mb-2">Input</button>
         </form>
+        <form method="POST" action="{{url ("posts/$post->id")}}" class="form-control">
+            @method('delete')
+            @csrf
+            <button type="submit" value="delete"class="btn btn-danger">DELETE</button>
+        </form>
     </div>
 </body>
-
 </html>
