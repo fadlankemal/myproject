@@ -11,6 +11,19 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public $fillable = [
+        'title',
+        'content',
+    ];
+    
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($post) {
+            $post->slug = str_replace(' ', '-' , $post->title);
+        });
+    }
+    
     public function comments() {
         return $this->hasMany(Comment::class);
     }

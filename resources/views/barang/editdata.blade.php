@@ -12,7 +12,7 @@
 <body>
     <div class="container mt-2">
         <h1>Edit Data Barang</h1>
-        <form method="POST" action="{{url ("posts/$post->id")}}" class="form-control">
+        <form method="POST" action="{{url ("data/$post->id")}}" class="form-control">
             @method('PATCH')
             @csrf
 
@@ -38,7 +38,7 @@
             </div>
             <button type="submit" class="btn btn-success mb-2">Input</button>
         </form>
-        <form method="POST" action="{{url ("posts/$post->id")}}" class="form-control">
+        <form method="POST" action="{{url ("data/$post->id")}}" class="form-control">
             @method('delete')
             @csrf
             <button type="submit" value="delete"class="btn btn-danger">DELETE</button>

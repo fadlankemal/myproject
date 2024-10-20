@@ -12,7 +12,7 @@
 <body>
     <div class="container mt-3 ">
         <h1>Tambah Data Barang</h1>
-        <form method="POST" action="{{ url('posts')}}" class="form-control">
+        <form method="POST" action="{{ url('data')}}" class="form-control">
             @csrf
 
             <div class="mb-3">

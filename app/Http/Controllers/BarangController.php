@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Types\Model\Posts;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
-class PostController extends Controller
+class BarangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,23 +20,11 @@ class PostController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
-        $posts = Post::kolom()->get();
+        $data = DB::table('databarang')->get();
         $view_data = [
-            'posts' => $posts,
+            'data' => $data,
         ];
-        return view('posts.index', $view_data);
-    }
-
-    public function databarang()
-    {
-        if (!Auth::check()) {
-            return redirect('login');
-        }
-        $datas = Post::kolom()->get();
-        $view_data = [
-            'posts' => $datas,
-        ];
-        return view('posts.databarang', $view_data);
+        return view('barang.databarang', $view_data);
     }
 
 
@@ -51,7 +36,7 @@ class PostController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
-        return view('posts.tambahdata');
+        return view('barang.tambahdata');
     }
 
 
@@ -64,13 +49,16 @@ class PostController extends Controller
         $nama_barang = $request->input('nama_barang');
         $tipe_barang = $request->input('tipe_barang');
         $merek_barang = $request->input('merek_barang');
+        $stok = $request->input('stok');
         $rak_barang = $request->input('rak_barang');
         $nomor_rak = $request->input('nomor_rak');
-
-        Post::insert([
+    
+        DB::table('databarang')
+        ->insert([
             'nama_barang' => $nama_barang,
             'tipe_barang' => $tipe_barang,
             'merek_barang' => $merek_barang,
+            'stok' => $stok,
             'rak_barang' => $rak_barang,
             'nomor_rak' => $nomor_rak,
         ]);
@@ -83,18 +71,17 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        $post = Post::where('id', $id)
-            ->first();
-        $comments = $post->comments()->limit(2)->get();
+    // public function show(string $id)
+    // {
+    //     $post = DB::table('databarang')->where('id', $id)
+    //         ->first();
 
-        $view_data = [
-            'post' => $post,
-            'comments' => $comments,
-        ];
-        return view('posts.show', $view_data);
-    }
+    //     $view_data = [
+    //         'post' => $post,
+    //         'comments' => $comments,
+    //     ];
+    //     return view('posts.show', $view_data);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -104,13 +91,13 @@ class PostController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
-        $post = Post::where('id', $id)
+        $datum = DB::table('databarang')->where('id', $id)
             ->first();
 
         $view_data = [
-            'post' => $post
+            'datum' => $datum
         ];
-        return view('posts.editdata', $view_data);
+        return view('barang.editdata', $view_data);
     }
 
     /**
@@ -124,14 +111,16 @@ class PostController extends Controller
         }$nama_barang = $request->input('nama_barang');
         $tipe_barang = $request->input('tipe_barang');
         $merek_barang = $request->input('merek_barang');
+        $stok = $request->input('stok');
         $rak_barang = $request->input('rak_barang');
         $nomor_rak = $request->input('nomor_rak');
 
-        Post::where('id', $id)
+        DB::table('databarang')->where('id', $id)
             ->update([
                 'nama_barang' => $nama_barang,
                 'tipe_barang' => $tipe_barang,
                 'merek_barang' => $merek_barang,
+                'stok' => $stok,
                 'rak_barang' => $rak_barang,
                 'nomor_rak' => $nomor_rak,
 
@@ -148,7 +137,7 @@ class PostController extends Controller
         if (!Auth::check()) {
             return redirect('login');
         }
-        Post::where('id', $id)->delete();
+        DB::table('databarang')->where('id', $id)->delete();
 
         return redirect('databarang');
     }

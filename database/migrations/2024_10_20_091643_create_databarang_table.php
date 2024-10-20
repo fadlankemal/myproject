@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('databarang', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('post_id');
-            $table->string('comment');
+            $table->string('nama_barang', 100);
+            $table->string('tipe_barang', 250);
+            $table->string('merek_barang', 100);
+            $table->smallInteger('stok');
+            $table->string('rak_barang', 1);
+            $table->smallInteger('nomor_rak');
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('databarang');
     }
 };
